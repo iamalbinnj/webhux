@@ -1,0 +1,52 @@
+{
+  "name": "webhux",
+  "version": "0.0.0",
+  "description": "A developer dashboard to capture, inspect, and debug webhook events in real time.",
+  "author": {
+    "name": "Albin N J",
+    "email": "albinnj0214@gmail.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/iamalbinnj/webhux#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamalbinnj/webhux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iamalbinnj/webhux/issues"
+  },
+  "keywords": [
+    "webhook",
+    "webhook-dashboard",
+    "webhook-debugger",
+    "webhook-monitoring",
+    "api-webhooks",
+    "event-listener",
+    "api-debugging",
+    "developer-tools",
+    "api-integration",
+    "webhook-testing"
+  ],
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write .",
+    "dev": "docker compose up --build",
+    "down": "docker compose down",
+    "logs": "docker compose logs -f",
+    "clean": "docker compose down -v"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "@typescript-eslint/eslint-plugin": "^8.58.1",
+    "@typescript-eslint/parser": "^8.58.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.4.0",
+    "jiti": "^2.6.1",
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.1"
+  }
+}
