@@ -1,6 +1,7 @@
 {
   "name": "webhux",
   "version": "0.0.0",
+  "private": true,
   "description": "A developer dashboard to capture, inspect, and debug webhook events in real time.",
   "author": {
     "name": "Albin N J",
