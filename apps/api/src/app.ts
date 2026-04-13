@@ -11,6 +11,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API Routes
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', message: "Healthy some" });
+});
 app.use('/', routes);
 
 // Error handling middleware
