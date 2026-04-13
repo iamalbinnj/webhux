@@ -5,7 +5,6 @@ export interface IService extends Document {
   publicId: string
   projectId: mongoose.Types.ObjectId
   secretKey: string
-  name: string
   createdAt: Date
   updatedAt: Date
 }
@@ -27,9 +26,6 @@ const ServiceSchema: Schema<IService> = new Schema(
     secretKey: {
       type: String,
       required: true,
-    },
-    name: {
-      type: String,
     },
   },
   { timestamps: true },

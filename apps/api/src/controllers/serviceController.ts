@@ -59,15 +59,16 @@ export class ServiceController {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const { id, projectId } = req.params as {
-        id: string
-        projectId: string
-      }
-      const secretKey = await this.serviceService.getDecryptedSecret(
-        id,
-        projectId,
+      const { id, projectId } = req.params as { id: string; projectId: string }
+
+      const service = await this.serviceService.getById(id, projectId)
+
+      successResponse(
+        res,
+        { secretKey: service.secretKey },
+        'Secret fetched successfully',
+        200,
       )
-      successResponse(res, { secretKey }, 'Secret decrypted', 200)
     } catch (error) {
       next(error)
     }

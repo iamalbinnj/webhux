@@ -36,6 +36,7 @@
     "format": "prettier --write .",
     "dev" : "docker compose up",
     "dev:api": "npm run --workspace=webhux-api dev",
+    "dev:webhook": "npm run --workspace=webhux-webhook dev",
     "build": "docker compose up --build",
     "down": "docker compose down",
     "logs": "docker compose logs -f",

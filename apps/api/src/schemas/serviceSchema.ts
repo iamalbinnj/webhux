@@ -26,6 +26,9 @@ export const createServiceSchema = z.object({
     .string({ error: 'Service name is required' })
     .min(1, 'Service name is required')
     .max(100, 'Service name cannot exceed 100 characters'),
+  secretKey: z
+    .string({ error: 'Secret key is required' })
+    .min(1, 'Secret key is required'),
 });
 
 export const updateServiceSchema = z.object({

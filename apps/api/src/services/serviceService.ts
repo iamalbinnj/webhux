@@ -8,7 +8,11 @@ interface UpdateServicePayload {
 }
 
 export class ServiceService {
-  async create(data: { name: string; projectId: string }): Promise<IService> {
+  async create(data: {
+    name: string
+    projectId: string
+    secretKey: string
+  }): Promise<IService> {
     const project = await Project.findById(data.projectId)
 
     if (!project) {
@@ -18,6 +22,7 @@ export class ServiceService {
     const service = await Service.create({
       projectId: data.projectId,
       name: data.name,
+      secretKey: data.secretKey,
     })
 
     return service
@@ -57,15 +62,6 @@ export class ServiceService {
     }
 
     return service
-  }
-
-  async getDecryptedSecret(id: string, projectId: string): Promise<string> {
-    const service = await this.getById(id, projectId)
-    try {
-      return service.getSecret()
-    } catch {
-      throw new ApiError('Unable to decrypt service secret', 500)
-    }
   }
 
   async update(
