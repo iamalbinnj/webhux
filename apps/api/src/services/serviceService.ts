@@ -1,6 +1,7 @@
 import { ApiError } from '../middleware/errorHandler.js'
 import { Service, IService } from '../models/Service.js'
 import { Project } from '../models/Project.js'
+import { Webhook } from '../models/Webhook.js'
 
 interface UpdateServicePayload {
   name?: string
@@ -43,7 +44,7 @@ export class ServiceService {
     return services
   }
 
-  async getById(id: string, projectId: string): Promise<IService> {
+  async getById(id: string, projectId: string) {
     const service = await Service.findOne({
       _id: id,
       projectId: projectId,
@@ -51,6 +52,7 @@ export class ServiceService {
 
     if (!service) {
       const project = await Project.findById(projectId)
+
       if (!project) {
         throw new ApiError(`Project with ID ${projectId} not found`, 404)
       }
@@ -61,7 +63,14 @@ export class ServiceService {
       )
     }
 
-    return service
+    const webhooks = await Webhook.find({ serviceId: service._id }).select(
+      'publicId payload createdAt',
+    ) // only what you need
+
+    return {
+      service,
+      webhooks,
+    }
   }
 
   async update(
