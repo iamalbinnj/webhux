@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
-import { ServiceService } from '../services/serviceService'
-import { successResponse, successWithCount } from '../utils/apiResponse'
+import { ServiceService } from '../services/serviceService.js'
+import { successResponse, successWithCount } from '../utils/apiResponse.js'
 
 export class ServiceController {
   private serviceService = new ServiceService()

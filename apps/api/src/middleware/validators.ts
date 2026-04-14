@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodType } from "zod";
-import { ApiError } from "./errorHandler";
+import { ApiError } from "./errorHandler.js";
 
 type Source = "body" | "params" | "query";
 

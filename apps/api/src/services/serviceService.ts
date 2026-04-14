@@ -1,6 +1,6 @@
-import { ApiError } from '../middleware/errorHandler'
-import { Service, IService } from '../models/Service'
-import { Project } from '../models/Project'
+import { ApiError } from '../middleware/errorHandler.js'
+import { Service, IService } from '../models/Service.js'
+import { Project } from '../models/Project.js'
 
 interface UpdateServicePayload {
   name?: string
