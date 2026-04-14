@@ -1,16 +1,32 @@
 services:
-
   api:
-    build:
-      context: ./apps/api
-      dockerfile: Dockerfile
+    image: node:20-alpine
     container_name: webhook-api
     ports:
       - "8080:8080"
-    command: npm run dev
+    command: sh -c "npm install && npm run dev"
     volumes:
       - ./apps/api:/app
       - /app/node_modules
+    working_dir: /app
+    env_file:
+      - ./apps/api/.env
     environment:
       NODE_ENV: development
       PORT: 8080
+
+  weebhook:
+    image: node:20-alpine
+    container_name: webhook-webhook
+    ports:
+      - "5000:5000"
+    command: sh -c "npm install && npm run dev"
+    volumes:
+      - ./apps/webhook:/app
+      - /app/node_modules
+    working_dir: /app
+    env_file:
+      - ./apps/webhook/.env
+    environment:
+      NODE_ENV: development
+      PORT: 5000

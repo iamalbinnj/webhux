@@ -1,6 +1,6 @@
-import app from './src/app.js';
-import { initializeDatabase } from './src/config/database.js';
-import config from './src/config/config.js';
+import app from './src/app';
+import { initializeDatabase } from './src/config/database';
+import config from './src/config/config';
 
 const startServer = async () => {
   try {
