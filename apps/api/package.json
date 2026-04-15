@@ -7,8 +7,7 @@
   "scripts": {
     "dev": "tsx watch server.ts",
     "build": "tsc",
-    "start": "node dist/server.js",
-    "lint": "eslint src --ext .ts"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "better-auth": "^1.6.2",
