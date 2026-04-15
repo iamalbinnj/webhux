@@ -1,0 +1,82 @@
+name: Webhux CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Build & Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install root deps
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      # -------- API --------
+      - name: Build API
+        run: |
+          cd apps/api
+          npm install
+          npm run build
+
+      # ------ WEBHOOK ------
+      - name: Build Webhook
+        run: |
+          cd apps/webhook
+          npm install
+          npm run build
+
+      # -------- WEB --------
+      - name: Build Web
+        run: |
+          cd apps/web
+          npm install
+          npm run build
+
+  docker:
+    name: Build & Push Docker Images
+    needs: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # -------- API --------
+      - name: Build & Push API
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest ./apps/api
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest
+
+      # ------ WEBHOOK ------
+      - name: Build & Push Webhook
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-webhook:latest ./apps/webhook
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/webhux-webhook:latest
+
+      # -------- WEB --------
+      - name: Build & Push Web
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-web:latest ./apps/web
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/webhux-web:latest
