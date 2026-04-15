@@ -45,7 +45,7 @@ export default function ServiceList({ projectId }: ServiceListProps) {
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    navigator.clipboard.writeText(`process.env.NEXT_PUBLIC_API_BASE_URL/webhook/${service.publicId}`);
+                    navigator.clipboard.writeText(`process.env.NEXT_PUBLIC_WEBHOOK_BASE_URL/webhook/${service.publicId}`);
                   }}
                 >
                   <Copy className="w-4 h-4" />
