@@ -65,7 +65,7 @@ export class ServiceController {
 
       successResponse(
         res,
-        { secretKey: service.secretKey },
+        { secretKey: service.service.secretKey },
         'Secret fetched successfully',
         200,
       )
