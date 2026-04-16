@@ -63,13 +63,19 @@ jobs:
       # -------- API --------
       - name: Build & Push API
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest ./apps/api
+          docker build \
+            --build-arg PORT=8080 \
+            --build-arg BETTER_AUTH_URL="${{ secrets.BETTER_AUTH_URL }}" \
+            --build-arg FRONTEND_URL="${{ secrets.FRONTEND_URL }}" \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest ./apps/api
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest
 
       # ------ WEBHOOK ------
       - name: Build & Push Webhook
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-webhook:latest ./apps/webhook
+          docker build \
+            --build-arg PORT=5000 \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-webhook:latest ./apps/webhook
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/webhux-webhook:latest
 
       # -------- WEB --------

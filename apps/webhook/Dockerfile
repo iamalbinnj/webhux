@@ -13,6 +13,10 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+ARG PORT=5000
+
+ENV PORT=$PORT
+
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 
