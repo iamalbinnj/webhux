@@ -13,6 +13,14 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+ARG PORT=8080
+ARG BETTER_AUTH_URL
+ARG FRONTEND_URL
+
+ENV PORT=$PORT
+ENV BETTER_AUTH_URL=$BETTER_AUTH_URL
+ENV FRONTEND_URL=$FRONTEND_URL
+
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 
