@@ -75,5 +75,8 @@ jobs:
       # -------- WEB --------
       - name: Build & Push Web
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-web:latest ./apps/web
+          docker build \
+            --build-arg NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
+            --build-arg NEXT_PUBLIC_WEBHOOK_BASE_URL="${{ secrets.NEXT_PUBLIC_WEBHOOK_BASE_URL }}" \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-web:latest ./apps/web
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/webhux-web:latest
