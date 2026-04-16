@@ -18,6 +18,8 @@ async function fetchClient<T>(
 
   console.log(`[API] ${options.method || 'GET'} ${fullUrl}`);
 
+  console.log("API_BASE_URL:", API_BASE_URL);
+
   const response = await fetch(fullUrl, {
     method: options.method ?? 'GET',
     headers,
