@@ -4,10 +4,16 @@ import routes from './routes/index.js';
 import { errorHandler } from './middleware/errorHandler.js';
 const app: Application = express();
 
+const FRONTEND_URL = process.env.FRONTEND_URL;
+
+if (!FRONTEND_URL) {
+  throw new Error('FRONTEND_URL is not defined');
+}
+
 // Middleware
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, 'http://localhost:3000'],
+    origin: [FRONTEND_URL, 'http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   }),
