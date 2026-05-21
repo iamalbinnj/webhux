@@ -7,6 +7,5 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "files": [".eslintrc.ts"],
   "exclude": ["node_modules"]
 }

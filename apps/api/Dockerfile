@@ -1,29 +1,55 @@
-FROM node:20-alpine AS base
+# syntax=docker/dockerfile:1.7
+
+ARG NODE_VERSION=20
+
+FROM node:${NODE_VERSION}-alpine AS base
+
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm ci
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV TURBO_TELEMETRY_DISABLED=1
 
-FROM base AS build
+RUN corepack enable
+
+FROM base AS pruner
+
 COPY . .
-RUN npm run build
 
-FROM node:20-alpine AS prod
+RUN pnpm dlx turbo prune webhux-api --docker
+
+FROM base AS installer
+
+COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+
+RUN --mount=type=cache,id=pnpm-store,target=/pnpm/store \
+    pnpm install --frozen-lockfile
+
+FROM base AS builder
+
+COPY --from=installer /app/ .
+COPY --from=pruner /app/out/full/ .
+
+RUN pnpm exec turbo run build --filter=webhux-api
+
+FROM node:${NODE_VERSION}-alpine AS runner
+
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-ARG PORT=8080
-ARG BETTER_AUTH_URL
-ARG FRONTEND_URL
+RUN addgroup -S nodejs && adduser -S webhux-api -G nodejs
 
-ENV PORT=$PORT
-ENV BETTER_AUTH_URL=$BETTER_AUTH_URL
-ENV FRONTEND_URL=$FRONTEND_URL
+# Root dependencies
+COPY --from=installer /app/node_modules ./node_modules
 
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
+# App build
+COPY --from=builder /app/apps/api/dist ./apps/api/dist
+COPY --from=builder /app/apps/api/package.json ./apps/api/package.json
+
+USER webhux-api
 
 EXPOSE 8080
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "apps/api/dist/server.js"]
