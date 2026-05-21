@@ -29,15 +29,15 @@
     "webhook-testing"
   ],
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
-    "dev": "docker compose -f docker-compose.dev.yml up",
+    "dev": "docker compose -f docker-compose.yml up",
     "prod": "docker compose up -d --build",
     "down": "docker compose down",
     "logs": "docker compose logs -f",
     "clean": "docker compose down -v --remove-orphans",
-
     "build": "npm run build --workspaces",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write ."
@@ -48,9 +48,10 @@
     "@typescript-eslint/parser": "^8.58.1",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.4.0",
-    "jiti": "^2.6.1",
     "prettier": "^3.8.1",
+    "turbo": "^2.0.0",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.58.1"
-  }
+  },
+  "packageManager": "pnpm@9.15.0"
 }

@@ -3,8 +3,8 @@ version: "3.9"
 services:
   api:
     build:
-      context: ./apps/api
-      target: prod
+      context: .
+      dockerfile: ./apps/api/Dockerfile
     container_name: webhux-api
     ports:
       - "8080:8080"
@@ -14,8 +14,8 @@ services:
 
   webhook:
     build:
-      context: ./apps/webhook
-      target: prod
+      context: .
+      dockerfile: ./apps/webhook/Dockerfile
     container_name: webhux-webhook
     ports:
       - "5000:5000"
@@ -25,7 +25,8 @@ services:
 
   web:
     build:
-      context: ./apps/web
+      context: .
+      dockerfile: ./apps/web/Dockerfile
     container_name: webhux-web
     ports:
       - "3000:3000"
