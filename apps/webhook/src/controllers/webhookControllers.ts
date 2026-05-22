@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
-import { WebhookService } from '../services/webhookService'
-import { successResponse } from '../utils/apiResponse'
+import { WebhookService } from '../services/webhookService.js'
+import { successResponse } from '../utils/apiResponse.js'
 
 export class WebhookController {
   private webhookService = new WebhookService()
