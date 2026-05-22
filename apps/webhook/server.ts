@@ -1,4 +1,4 @@
-import app from './src/app';
+import app from './src/app.js';
 import { initializeDatabase } from '@webhux/db';
 import { config } from "@webhux/config"
 
