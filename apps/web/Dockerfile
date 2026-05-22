@@ -50,6 +50,11 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
+ARG NEXT_PUBLIC_WEBHOOK_BASE_URL
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_WEBHOOK_BASE_URL=$NEXT_PUBLIC_WEBHOOK_BASE_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+
 RUN addgroup -S nodejs && adduser -S webhux-web -G nodejs
 
 # 1. Copy the standalone execution folder (Next.js automatically packages production deps here)
