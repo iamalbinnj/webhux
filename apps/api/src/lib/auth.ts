@@ -14,12 +14,10 @@ export const auth = betterAuth({
 
   // === Required for different domains on Railway ===
   trustedOrigins: [
-    process.env.FRONTEND_URL || 'https://webhux-web-production.up.railway.app',
-    'http://localhost:3000',
-    'https://webhux-web-production.up.railway.app',
+    process.env.FRONTEND_URL || 'http://localhost:3000',
   ],
 
-  baseURL: process.env.API_BASE_URL || 'https://webhux-api-production.up.railway.app',
+  baseURL: process.env.API_BASE_URL || 'http://localhost:3000',
 
   advanced: {
     defaultCookieAttributes: {
