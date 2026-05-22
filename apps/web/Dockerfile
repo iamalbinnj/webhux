@@ -48,16 +48,22 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
 
 RUN addgroup -S nodejs && adduser -S webhux-web -G nodejs
 
+# server.js lands at /app/server.js
 COPY --from=builder /app/apps/web/.next/standalone ./
-COPY --from=builder /app/apps/web/.next/static ./apps/web/.next/static
-COPY --from=builder /app/apps/web/public ./apps/web/public
+
+# server.js expects static files at /app/.next/static
+COPY --from=builder /app/apps/web/.next/static ./.next/static
+
+# server.js expects public files at /app/public
+COPY --from=builder /app/apps/web/public ./public
 
 USER webhux-web
 
 EXPOSE 3000
 
-CMD ["node", "apps/web/server.js"]
+CMD ["node", "server.js"]
