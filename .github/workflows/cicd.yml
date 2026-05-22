@@ -61,6 +61,8 @@ jobs:
           file: ./apps/api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest
+          build-args: |
+            FRONTEND_URL=${{ secrets.FRONTEND_URL }}
           cache-from: type=gha,scope=api
           cache-to: type=gha,mode=max,scope=api
 
