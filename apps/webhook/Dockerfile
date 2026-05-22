@@ -42,8 +42,10 @@ ENV NODE_ENV=production
 
 RUN addgroup -S nodejs && adduser -S webhux-webhook -G nodejs
 
-# Root dependencies
-COPY --from=installer /app/node_modules ./node_modules
+# Root dependencies and workspace package node_modules
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/webhook/node_modules ./apps/webhook/node_modules
+COPY --from=builder /app/packages ./packages
 
 # App files
 COPY --from=builder /app/apps/webhook/dist ./apps/webhook/dist

@@ -42,8 +42,10 @@ ENV NODE_ENV=production
 
 RUN addgroup -S nodejs && adduser -S webhux-api -G nodejs
 
-# Root dependencies
-COPY --from=installer /app/node_modules ./node_modules
+# Root dependencies and workspace package node_modules
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/api/node_modules ./apps/api/node_modules
+COPY --from=builder /app/packages ./packages
 
 # App build
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
