@@ -40,6 +40,11 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+ARG FRONTEND_URL
+ARG BACKEND_URL          
+ENV FRONTEND_URL=$FRONTEND_URL
+ENV BACKEND_URL=$BACKEND_URL   
+
 RUN addgroup -S nodejs && adduser -S webhux-api -G nodejs
 
 # Root dependencies and workspace package node_modules

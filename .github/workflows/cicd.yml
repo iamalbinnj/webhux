@@ -62,7 +62,9 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest
           build-args: |
+            PORT=8080
             FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+            BACKEND_URL=${{ secrets.BACKEND_URL }}
           cache-from: type=gha,scope=api
           cache-to: type=gha,mode=max,scope=api
 
