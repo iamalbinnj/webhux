@@ -12,10 +12,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@webhux/db": "workspace:^",
+    "@webhux/config": "workspace:^",
     "cors": "^2.8.6",
-    "dotenv": "^17.4.1",
     "express": "^5.2.1",
-    "mongoose": "^9.4.1",
     "nanoid": "^5.1.7",
     "zod": "^4.3.6"
   },

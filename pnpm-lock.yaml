@@ -157,18 +157,18 @@ importers:
 
   apps/webhook:
     dependencies:
+      '@webhux/config':
+        specifier: workspace:^
+        version: link:../../packages/config
+      '@webhux/db':
+        specifier: workspace:^
+        version: link:../../packages/db
       cors:
         specifier: ^2.8.6
         version: 2.8.6
-      dotenv:
-        specifier: ^17.4.1
-        version: 17.4.2
       express:
         specifier: ^5.2.1
         version: 5.2.1
-      mongoose:
-        specifier: ^9.4.1
-        version: 9.6.2
       nanoid:
         specifier: ^5.1.7
         version: 5.1.11
@@ -3431,10 +3431,6 @@ packages:
     resolution: {integrity: sha512-C3iHfuGUXK2u8/ipq9LfjFfXFxAZMQJJq7vLS45r3D9Y2xQ/m4S8zaR4zMLFWh9AsNPXmcFfUDhTEO8UIC/V6Q==}
     engines: {node: '>=12.0.0'}
 
-  kareem@3.3.0:
-    resolution: {integrity: sha512-kpSuLD3/7RenBnjnJdOHXCKC8dTd1JzeOiJhN0necWWci6cC+qX+VuwPnMVgb+a4+KNJSfgqahpnfWaeDXCimw==}
-    engines: {node: '>=18.0.0'}
-
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
@@ -3685,10 +3681,6 @@ packages:
     resolution: {integrity: sha512-EEZwOibDPZ5uZN3bFapfnRskEbdljAf6sP9ln6u+P4e5IfkOAh6Tqw2g8/Tag++KHOAJ095WXT/c0uqRq4Vckg==}
     engines: {node: '>=16.20.1'}
 
-  mongoose@9.6.2:
-    resolution: {integrity: sha512-7m8HntjkoRnwEmuPC0kdlwcZXJOQf4twumFj+PNzg/anqqZE2Er7hQslqyzy07mP3JcFjoTSgH5765PyqOXsxw==}
-    engines: {node: '>=20.19.0'}
-
   mpath@0.9.0:
     resolution: {integrity: sha512-ikJRQTk8hw5DEoFVxHG1Gn9T/xcjtdnOKIU1JTmGjZZlg9LST2mBLmcX3/ICIbgJydT2GOc15RnNy5mHmzfSew==}
     engines: {node: '>=4.0.0'}
@@ -3696,10 +3688,6 @@ packages:
   mquery@5.0.0:
     resolution: {integrity: sha512-iQMncpmEK8R8ncT8HJGsGc9Dsp8xcgYMVSbs5jgnm1lFHTZqMJTUWTDx1LBO8+mK3tPNZWFLBghQEIOULSTHZg==}
     engines: {node: '>=14.0.0'}
-
-  mquery@6.0.0:
-    resolution: {integrity: sha512-b2KQNsmgtkscfeDgkYMcWGn9vZI9YoXh802VDEwE6qc50zxBFQ0Oo8ROkawbPAsXCY1/Z1yp0MagqsZStPWJjw==}
-    engines: {node: '>=20.19.0'}
 
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
@@ -8049,8 +8037,6 @@ snapshots:
 
   kareem@2.6.3: {}
 
-  kareem@3.3.0: {}
-
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
@@ -8232,23 +8218,6 @@ snapshots:
       - socks
       - supports-color
 
-  mongoose@9.6.2:
-    dependencies:
-      kareem: 3.3.0
-      mongodb: 7.2.0
-      mpath: 0.9.0
-      mquery: 6.0.0
-      ms: 2.1.3
-      sift: 17.1.3
-    transitivePeerDependencies:
-      - '@aws-sdk/credential-providers'
-      - '@mongodb-js/zstd'
-      - gcp-metadata
-      - kerberos
-      - mongodb-client-encryption
-      - snappy
-      - socks
-
   mpath@0.9.0: {}
 
   mquery@5.0.0:
@@ -8256,8 +8225,6 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
-
-  mquery@6.0.0: {}
 
   ms@2.1.3: {}
 
