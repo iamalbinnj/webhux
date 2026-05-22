@@ -1,7 +1,7 @@
 import { ApiError } from '../middleware/errorHandler.js'
-import { Service, IService } from '../models/Service.js'
-import { Project } from '../models/Project.js'
-import { Webhook } from '../models/Webhook.js'
+import { Service, IService } from '@webhux/db'
+import { Project } from '@webhux/db'
+import { Webhook } from '@webhux/db'
 
 interface UpdateServicePayload {
   name?: string

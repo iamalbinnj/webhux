@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import mongoose from 'mongoose';
+import { isObjectId } from '@webhux/db';
 
 export const projectIdParamSchema = z.object({
   projectId: z
     .string({ error: 'Project ID is required' })
     .min(1, 'Project ID is required')
-    .refine((val) => mongoose.Types.ObjectId.isValid(val), {
-      message: 'Project id is invalid',
+    .refine(isObjectId, {
+      message: "Project id is invalid",
     }),
 });
 
@@ -14,8 +14,8 @@ export const serviceIdParamSchema = z.object({
   id: z
     .string({ error: 'Service ID is required' })
     .min(1, 'Service ID is required')
-    .refine((val) => mongoose.Types.ObjectId.isValid(val), {
-      message: 'Service id is invalid',
+    .refine(isObjectId, {
+      message: "Project id is invalid",
     }),
 });
 

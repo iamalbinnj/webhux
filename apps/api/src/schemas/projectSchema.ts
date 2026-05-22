@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import mongoose from "mongoose";
+import { isObjectId } from '@webhux/db';
 
 export const createProjectSchema = z.object({
   name: z
@@ -18,8 +18,8 @@ export const getProjectParamsSchema = z.object({
   id: z
     .string()
     .min(1, { error: 'Project id is required' })
-    .refine((val) => mongoose.Types.ObjectId.isValid(val), {
-      error: 'Project id is invalid',
+    .refine(isObjectId, {
+      message: "Project id is invalid",
     }),
 })
 
