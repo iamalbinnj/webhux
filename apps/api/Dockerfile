@@ -20,6 +20,7 @@ RUN pnpm dlx turbo prune webhux-api --docker
 
 FROM base AS installer
 
+COPY tsconfig.base.json ./tsconfig.base.json
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 
