@@ -1,5 +1,5 @@
-import { Service } from '../models/Service'
-import { Webhook } from '../models/Webhook'
+import { Service } from '@webhux/db'
+import { Webhook } from '@webhux/db'
 
 export class WebhookService {
   async create(id: string, payload: unknown) {
