@@ -1,6 +1,6 @@
 import app from './src/app.js';
-import { initializeDatabase } from './src/config/database.js';
-import config from './src/config/config.js';
+import { initializeDatabase } from '@webhux/db';
+import { config } from "@webhux/config"
 
 const startServer = async () => {
   try {

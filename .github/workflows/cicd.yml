@@ -65,7 +65,7 @@ jobs:
         run: |
           docker build \
             --build-arg PORT=8080 \
-            --build-arg BETTER_AUTH_URL="${{ secrets.BETTER_AUTH_URL }}" \
+            --build-arg BACKEND_URL="${{ secrets.BACKEND_URL }}" \
             --build-arg FRONTEND_URL="${{ secrets.FRONTEND_URL }}" \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest ./apps/api
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest

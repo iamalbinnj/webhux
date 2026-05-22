@@ -1,5 +1,5 @@
 import { ApiError } from '../middleware/errorHandler.js'
-import { Project, IProject } from '../models/Project.js'
+import { Project, IProject } from '@webhux/db'
 
 interface UpdateProjectPayload {
   name?: string
@@ -27,7 +27,7 @@ export class ProjectService {
   }
 
   async getById(id: string, userId: string) {
-    const project = await Project.findById({ _id: id, userId })
+    const project = await Project.findOne({ _id: id, userId })
 
     if (!project) {
       throw new ApiError(`Project with id ${id} not found`, 404)
@@ -37,7 +37,7 @@ export class ProjectService {
   }
 
   async update(id: string, userId: string, payload: UpdateProjectPayload) {
-    const project = await Project.findById({ _id: id, userId })
+    const project = await Project.findOne({ _id: id, userId })
 
     if (!project) {
       throw new ApiError(`Project with id ${id} not found`, 404)
@@ -50,7 +50,7 @@ export class ProjectService {
   }
 
   async delete(id: string, userId: string) {
-    const project = await Project.findById({ _id: id, userId })
+    const project = await Project.findOne({ _id: id, userId })
 
     if (!project) {
       throw new ApiError(`Project with id ${id} not found`, 404)
