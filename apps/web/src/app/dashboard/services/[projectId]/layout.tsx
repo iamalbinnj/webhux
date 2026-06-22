@@ -1,7 +1,5 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { TOKEN_KEY } from '@/lib/constants';
 import type { ReactNode } from 'react';
+import { AuthGuard } from '@/lib/authGuard';
 
 interface ServiceLayoutProps {
   children: ReactNode;
@@ -9,12 +7,8 @@ interface ServiceLayoutProps {
 }
 
 export default async function ServiceLayout({ children, params }: ServiceLayoutProps) {
-  const token = (await cookies()).get(TOKEN_KEY);
-  if (!token) {
-    redirect('/login');
-  }
 
   const { projectId } = await params;
 
-  return <>{children}</>;
+  return <><AuthGuard>{children}</AuthGuard></>;
 }

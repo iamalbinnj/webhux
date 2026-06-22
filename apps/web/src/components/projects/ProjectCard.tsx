@@ -1,49 +1,40 @@
-// src/components/projects/ProjectCard.tsx
-import Link from 'next/link';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import type { Project } from '@/types/project.types';
-import { Folder } from 'lucide-react';
+import Link from "next/link";
+import { Calendar, Edit3, Eye, Folder, Trash2 } from "lucide-react";
+import type { Project } from "@/types/project.types";
 
-interface ProjectCardProps {
-  project: Project;
-}
-
-export default function ProjectCard({ project }: ProjectCardProps) {
-  if (!project?.id) {
-    console.warn("Project without id:", project);
-    return null;
-  }
+export default function ProjectCard({ project }: { project: Project }) {
+  if (!project?.id) return null;
 
   return (
-    <Link href={`/dashboard/projects/${project.id}`}>
-      <Card className="hover:shadow-md transition-shadow border border-gray-100 group cursor-pointer">
-        <CardHeader className="pb-4">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-blue-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Folder className="w-5 h-5 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg leading-none">{project.name}</h3>
-                {project.description && (
-                  <p className="text-sm text-gray-500 mt-1 line-clamp-2">{project.description}</p>
-                )}
-              </div>
-            </div>
+    <article className="group rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/25">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <div className="grid h-11 w-11 place-items-center rounded-2xl bg-white text-black transition group-hover:scale-105">
+            <Folder className="h-5 w-5" />
           </div>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex items-center justify-between text-sm">
-            <Badge variant="secondary" className="font-normal">
-              {project.serviceCount || 0} services
-            </Badge>
-            <span className="text-xs text-gray-400">
-              {new Date(project.createdAt).toLocaleDateString()}
-            </span>
+          <div>
+            <h3 className="text-lg font-semibold">{project.name}</h3>
+            <p className="mt-2 line-clamp-2 text-sm leading-6 text-white/45">{project.description || "No description added yet."}</p>
           </div>
-        </CardContent>
-      </Card>
-    </Link>
+        </div>
+      </div>
+      <div className="mt-6 flex items-center justify-between text-sm">
+        <span className="rounded-full border border-white/10 px-3 py-1 text-white/55">{project.serviceCount || 0} services</span>
+        <span className="inline-flex items-center gap-2 text-xs text-white/35"><Calendar className="h-3.5 w-3.5" />{new Date(project.createdAt).toLocaleDateString()}</span>
+      </div>
+      <div className="mt-6 flex items-center gap-2">
+        <Link href={`/dashboard/projects/${project.id}`} className="inline-flex h-10 items-center gap-2 rounded-xl bg-white px-4 text-sm font-semibold text-black">
+          <Eye className="h-4 w-4" />
+          View
+        </Link>
+        <button className="inline-flex h-10 items-center gap-2 rounded-xl border border-white/10 px-4 text-sm text-white/60 hover:bg-white/5">
+          <Edit3 className="h-4 w-4" />
+          Edit
+        </button>
+        <button className="ml-auto grid h-10 w-10 place-items-center rounded-xl border border-red-400/20 text-red-300 hover:bg-red-400/10" aria-label="Delete project">
+          <Trash2 className="h-4 w-4" />
+        </button>
+      </div>
+    </article>
   );
 }

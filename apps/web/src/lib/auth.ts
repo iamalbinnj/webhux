@@ -3,7 +3,7 @@ import { TOKEN_KEY, USER_KEY } from './constants';
 import type { User } from '@/types/auth.types';
 
 export function setToken(token: string): void {
-  Cookies.set(TOKEN_KEY, token, { expires: 7, secure: true, sameSite: 'strict' });
+  Cookies.set(TOKEN_KEY, token, { expires: 7, secure: isHttps(), sameSite: 'strict' });
 }
 
 export function getToken(): string | undefined {
@@ -15,7 +15,7 @@ export function removeToken(): void {
 }
 
 export function setUser(user: User): void {
-  Cookies.set(USER_KEY, JSON.stringify(user), { expires: 7, secure: true, sameSite: 'strict' });
+  Cookies.set(USER_KEY, JSON.stringify(user), { expires: 7, secure: isHttps(), sameSite: 'strict' });
 }
 
 export function getUser(): User | null {
@@ -30,4 +30,8 @@ export function getUser(): User | null {
 
 export function removeUser(): void {
   Cookies.remove(USER_KEY);
+}
+
+function isHttps(): boolean {
+  return typeof window !== 'undefined' && window.location.protocol === 'https:';
 }

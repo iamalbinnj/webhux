@@ -22,7 +22,7 @@ export default function ServiceDetailPage() {
   };
 
   return (
-    <div className="max-w-5xl space-y-12">
+    <div className="space-y-8">
       <WebhookEndpointInfo projectId={projectId} serviceId={serviceId} />
 
       <WebhookLogsTable
