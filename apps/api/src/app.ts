@@ -12,7 +12,7 @@ if (!FRONTEND_URL) {
 
 // Middleware
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'https://webhux-web-production.up.railway.app',
+  process.env.FRONTEND_URL,
   'http://localhost:3000',
 ];
 
@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routes
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', message: "Healthy some" });
+  res.status(200).json({ status: 'OK', message: "Healthy API" });
 });
 app.use('/', routes);
 

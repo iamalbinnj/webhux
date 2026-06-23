@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import routes from './routes/index.js';
+import { webhookRateLimit } from '@webhux/rate-limit'
 
 const app: Application = express();
 
@@ -14,6 +15,6 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: "Healthy Webhook" });
 });
 
-app.use('/webhook', routes);
+app.use('/webhook', webhookRateLimit, routes);
 
 export default app;

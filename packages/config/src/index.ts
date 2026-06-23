@@ -6,6 +6,6 @@ export const config = {
   port: process.env.PORT ? Number(process.env.PORT) : 3000,
   nodeEnv: process.env.NODE_ENV || "development",
   db: {
-    uri: process.env.MONGO_URI || "mongodb://localhost:27017/project_db",
+    uri: process.env.MONGO_URI || "mongodb://localhost:27017/webhux_db",
   },
 }
