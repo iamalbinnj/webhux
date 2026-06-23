@@ -1,5 +1,4 @@
-import { LucideIcon } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import type { LucideIcon } from "lucide-react";
 
 interface StatsCardProps {
   label: string;
@@ -9,18 +8,16 @@ interface StatsCardProps {
 
 export default function StatsCard({ label, value, icon: Icon }: StatsCardProps) {
   return (
-    <Card className="bg-white border border-gray-100 shadow-sm">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-gray-500">{label}</p>
-            <p className="text-4xl font-semibold tracking-tighter mt-2">{value}</p>
-          </div>
-          <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center">
-            <Icon className="w-6 h-6 text-blue-600" />
-          </div>
+    <article className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-2xl shadow-black/20">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-white/45">{label}</p>
+          <p className="mt-2 text-4xl font-semibold tracking-tight text-white">{value}</p>
         </div>
-      </CardContent>
-    </Card>
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-black">
+          <Icon className="h-6 w-6" />
+        </div>
+      </div>
+    </article>
   );
 }

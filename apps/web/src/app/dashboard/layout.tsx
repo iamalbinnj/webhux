@@ -1,21 +1,17 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 import Sidebar from '@/components/layout/Sidebar';
 import Topbar from '@/components/layout/Topbar';
-import { TOKEN_KEY } from '@/lib/constants';
 import type { ReactNode } from 'react';
+import { AuthGuard } from '@/lib/authGuard';
 
-export default async function DashboardLayout({ children }: { children: ReactNode }) {
-  const token = (await cookies()).get(TOKEN_KEY);
-  if (!token) {
-    redirect('/login');
-  }
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-[#0c0c0c] text-white">
       <Sidebar />
-      <div className="flex-1 ml-60">
+      <div className="ml-64 flex-1">
         <Topbar />
-        <main className="pt-16 p-8 max-w-screen-2xl mx-auto">{children}</main>
+        <main className="p-8 pt-24">
+          <AuthGuard>{children}</AuthGuard>
+        </main>
       </div>
     </div>
   );

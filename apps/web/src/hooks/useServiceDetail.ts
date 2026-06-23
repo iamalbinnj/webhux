@@ -9,15 +9,11 @@ export function useServiceDetail(projectId: string, serviceId: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  console.log("serviceprojectid", projectId)
-  console.log("serviceserviceId", serviceId)
-
   useEffect(() => {
     const load = async () => {
       try {
         setIsLoading(true);
         const data = await fetchServiceById(projectId, serviceId);
-        console.log("serviceData",data)
         setService(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load service');
