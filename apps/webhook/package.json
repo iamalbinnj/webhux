@@ -12,8 +12,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@webhux/db": "workspace:^",
     "@webhux/config": "workspace:^",
+    "@webhux/db": "workspace:^",
+    "@webhux/rate-limit": "workspace:^",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "nanoid": "^5.1.7",

@@ -92,3 +92,19 @@ jobs:
             NEXT_PUBLIC_WEBHOOK_BASE_URL=${{ secrets.NEXT_PUBLIC_WEBHOOK_BASE_URL }}
           cache-from: type=gha,scope=web
           cache-to: type=gha,mode=max,scope=web
+
+  deploy:
+      name: Deploy to Render
+      needs: docker
+      runs-on: ubuntu-latest
+      if: github.ref == 'refs/heads/main'
+
+      steps:
+        - name: Deploy API to Render
+          run: curl -X POST "${{ secrets.RENDER_API_WEBHOOK }}"
+
+        - name: Deploy Webhook to Render
+          run: curl -X POST "${{ secrets.RENDER_WEBHOOK_WEBHOOK }}"
+
+        - name: Deploy Web to Render
+          run: curl -X POST "${{ secrets.RENDER_WEB_WEBHOOK }}"
