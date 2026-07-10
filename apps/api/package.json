@@ -13,7 +13,7 @@
     "@webhux/config": "workspace:^",
     "@webhux/db": "workspace:^",
     "@webhux/rate-limit": "workspace:^",
-    "better-auth": "^1.6.2",
+    "better-auth": "^1.6.13",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "mongodb": "^7.2.0",
