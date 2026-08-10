@@ -17,7 +17,7 @@
     "@webhux/rate-limit": "workspace:^",
     "cors": "^2.8.6",
     "express": "^5.2.1",
-    "nanoid": "^5.1.7",
+    "nanoid": "^5.1.16",
     "zod": "^4.3.6"
   },
   "devDependencies": {
