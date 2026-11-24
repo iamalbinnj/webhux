@@ -5,7 +5,7 @@ import { useServiceDetail } from "@/hooks/useServiceDetail";
 
 export default function WebhookEndpointInfo({ projectId, serviceId }: { projectId: string; serviceId: string }) {
   const { service, isLoading } = useServiceDetail(projectId, serviceId);
-  const baseUrl = process.env.NEXT_PUBLIC_WEBHOOK_BASE_URL || "https://webhux.com";
+  const baseUrl = process.env.NEXT_PUBLIC_WEBHOOK_BASE_URL || "http://localhost:5000";
 
   if (isLoading) return <div className="h-48 animate-pulse rounded-3xl bg-white/[0.04]" />;
   if (!service) return null;

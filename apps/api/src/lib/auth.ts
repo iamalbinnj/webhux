@@ -8,7 +8,7 @@ const db = client.db('webhux');
 const apiBaseURL =
   process.env.API_BASE_URL ||
   process.env.BACKEND_URL ||
-  `http://localhost:${config.port}`;
+  `http://localhost:${config.apiPort}`;
 const isProduction = config.nodeEnv === 'production';
 
 export const auth = betterAuth({

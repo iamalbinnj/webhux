@@ -9,7 +9,7 @@ services:
     ports:
       - "8080:8080"
     env_file:
-      - ./apps/api/.env
+      - ./.env
     restart: unless-stopped
 
   webhook:
@@ -20,18 +20,21 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      - ./apps/webhook/.env
+      - ./.env
     restart: unless-stopped
 
   web:
     build:
       context: .
       dockerfile: ./apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_WEBHOOK_BASE_URL: ${NEXT_PUBLIC_WEBHOOK_BASE_URL}
     container_name: webhux-web
     ports:
       - "3000:3000"
     env_file:
-      - ./apps/web/.env
+      - ./.env
     environment:
       NODE_ENV: production
     depends_on:
