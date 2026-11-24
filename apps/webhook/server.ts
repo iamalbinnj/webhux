@@ -8,8 +8,8 @@ const startServer = async () => {
     await initializeDatabase();
 
     // Start the server
-    app.listen(config.port, () => {
-      console.log(`Server running in ${config.nodeEnv} mode on port ${config.port}`);
+    app.listen(config.webhookPort, () => {
+      console.log(`Server running in ${config.nodeEnv} mode on port ${config.webhookPort}`);
     });
   } catch (error) {
     console.log('Failed to start server:', error)

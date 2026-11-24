@@ -11,7 +11,7 @@ export default function ServiceList({ projectId }: { projectId: string }) {
   const [query, setQuery] = useState("");
   const { services, isLoading, refetch } = useProjectDetail(projectId);
   const filtered = services.filter((service) => service.name.toLowerCase().includes(query.toLowerCase()));
-  const baseUrl = process.env.NEXT_PUBLIC_WEBHOOK_BASE_URL || "https://webhux.com";
+  const baseUrl = process.env.NEXT_PUBLIC_WEBHOOK_BASE_URL || "http://localhost:5000";
 
   return (
     <section>

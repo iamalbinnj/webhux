@@ -1,18 +1,21 @@
-import app from './src/app.js';
-import { initializeDatabase } from '@webhux/db';
-import { config } from "@webhux/config"
-
 const startServer = async () => {
   try {
-    // Initialize database connection
+    const [{ default: app }, { initializeDatabase }, { config }] =
+      await Promise.all([
+        import('./src/app.js'),
+        import('@webhux/db'),
+        import('@webhux/config'),
+      ]);
+
     await initializeDatabase();
 
-    // Start the server
-    app.listen(config.port, () => {
-      console.log(`Server running in ${config.nodeEnv} mode on port ${config.port}`);
+    app.listen(config.apiPort, () => {
+      console.log(
+        `Server running in ${config.nodeEnv} mode on port ${config.apiPort}`
+      );
     });
   } catch (error) {
-    console.log('Failed to start server:', error)
+    console.error('Failed to start API:', error);
     process.exit(1);
   }
 };
