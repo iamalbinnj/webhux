@@ -61,10 +61,6 @@ jobs:
           file: ./apps/api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/webhux-api:latest
-          build-args: |
-            PORT=8080
-            FRONTEND_URL=${{ secrets.FRONTEND_URL }}
-            BACKEND_URL=${{ secrets.BACKEND_URL }}
           cache-from: type=gha,scope=api
           cache-to: type=gha,mode=max,scope=api
 
@@ -79,20 +75,6 @@ jobs:
           cache-from: type=gha,scope=webhook
           cache-to: type=gha,mode=max,scope=webhook
 
-      # -------- WEB --------
-      - name: Build & Push Web
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./apps/web/Dockerfile
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/webhux-web:latest
-          build-args: |
-            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
-            NEXT_PUBLIC_WEBHOOK_BASE_URL=${{ secrets.NEXT_PUBLIC_WEBHOOK_BASE_URL }}
-          cache-from: type=gha,scope=web
-          cache-to: type=gha,mode=max,scope=web
-
   deploy:
       name: Deploy to Render
       needs: docker
@@ -100,11 +82,5 @@ jobs:
       if: github.ref == 'refs/heads/main'
 
       steps:
-        - name: Deploy API to Render
-          run: curl -X POST "${{ secrets.RENDER_API_WEBHOOK }}"
-
         - name: Deploy Webhook to Render
           run: curl -X POST "${{ secrets.RENDER_WEBHOOK_WEBHOOK }}"
-
-        - name: Deploy Web to Render
-          run: curl -X POST "${{ secrets.RENDER_WEB_WEBHOOK }}"
