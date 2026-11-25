@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { loginUser, registerUser } from '@/api/auth.api'
+import { getCurrentUser, loginUser, logoutUser, refreshAuth, registerUser } from '@/api/auth.api'
 import {
   setToken,
   removeToken,
@@ -13,6 +13,34 @@ import {
 } from '@/lib/auth'
 import type { LoginPayload, RegisterPayload, User } from '@/types/auth.types'
 
+let initializationPromise: Promise<User | null> | null = null
+
+function initializeAuth(): Promise<User | null> {
+  if (!initializationPromise) {
+    initializationPromise = (async () => {
+      try {
+        let token = getToken()
+        if (!token) {
+          token = (await refreshAuth()).accessToken
+          setToken(token)
+        }
+        try {
+          return (await getCurrentUser(token)).user
+        } catch {
+          token = (await refreshAuth()).accessToken
+          setToken(token)
+          return (await getCurrentUser(token)).user
+        }
+      } catch {
+        removeToken()
+        removeUser()
+        return null
+      }
+    })()
+  }
+  return initializationPromise
+}
+
 export function useAuth() {
   const router = useRouter()
   const [user, setUserState] = useState<User | null>(() => getUser() ?? null)
@@ -22,8 +50,16 @@ export function useAuth() {
 
   // Load user from cookie on mount
   useEffect(() => {
-    // user is initialized lazily from getUser to avoid synchronous setState in effect
-    setIsInitializing(false)
+    let active = true
+    initializeAuth().then((currentUser) => {
+      if (active) {
+        if (currentUser) setUser(currentUser)
+        else removeUser()
+        setUserState(currentUser)
+        if (active) setIsInitializing(false)
+      }
+    })
+    return () => { active = false }
   }, [])
 
   const login = async (payload: LoginPayload) => {
@@ -31,10 +67,11 @@ export function useAuth() {
     setError(null)
     try {
       const response = await loginUser(payload)
-      const { token, session, user } = response.data
-      setToken(token ?? session?.token ?? 'authenticated')
+      const { accessToken, user } = response
+      setToken(accessToken)
       setUser(user)
       setUserState(user)
+      initializationPromise = Promise.resolve(user)
       router.push('/dashboard')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed')
@@ -49,10 +86,11 @@ export function useAuth() {
     setError(null)
     try {
       const response = await registerUser(payload)
-      const { token, session, user } = response.data
-      setToken(token ?? session?.token ?? 'authenticated')
+      const { accessToken, user } = response
+      setToken(accessToken)
       setUser(user)
       setUserState(user)
+      initializationPromise = Promise.resolve(user)
       router.push('/dashboard')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Registration failed')
@@ -62,11 +100,18 @@ export function useAuth() {
     }
   }
 
-  const logout = () => {
-    removeToken()
-    removeUser()
-    setUserState(null)
-    router.push('/login')
+  const logout = async () => {
+    try {
+      await logoutUser()
+    } catch {
+      // Clear local auth state even if the refresh cookie has already expired.
+    } finally {
+      removeToken()
+      removeUser()
+      setUserState(null)
+      initializationPromise = Promise.resolve(null)
+      router.push('/login')
+    }
   }
 
   const checkIsLoggedIn = (): boolean => {

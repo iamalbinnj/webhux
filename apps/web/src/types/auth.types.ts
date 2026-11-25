@@ -1,5 +1,3 @@
-import type { ApiResponse } from './api.types';
-
 export interface LoginPayload {
   email: string;
   password: string;
@@ -11,13 +9,10 @@ export interface RegisterPayload {
   password: string;
 }
 
-export type AuthResponse = ApiResponse<AuthData>;
-
-export interface AuthData {
-  token?: string;
-  session?: {
-    token?: string;
-  };
+export interface AuthResponse {
+  success: boolean;
+  message: string;
+  accessToken: string;
   user: User;
 }
 

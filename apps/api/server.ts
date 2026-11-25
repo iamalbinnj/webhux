@@ -1,11 +1,10 @@
 const startServer = async () => {
   try {
-    const [{ default: app }, { initializeDatabase }, { config }] =
-      await Promise.all([
-        import('./src/app.js'),
-        import('@webhux/db'),
-        import('@webhux/config'),
-      ]);
+    const { config } = await import('@webhux/config');
+    const [{ default: app }, { initializeDatabase }] = await Promise.all([
+      import('./src/app.js'),
+      import('@webhux/db'),
+    ]);
 
     await initializeDatabase();
 
